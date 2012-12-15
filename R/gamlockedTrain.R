@@ -1,3 +1,81 @@
+#'Function to Smooth a lockedTrain Object and Related Methods: The Penalized
+#'Regression Spline Approach
+#'
+#'Smooths a \code{lockedTrain} object using a \code{gam} model with the Poisson
+#'family after binning the object.
+#'
+#'\code{gamlockedTrain} essentially generates a smooth version of the histogram
+#'obtained by \code{\link{hist.lockedTrain}}. The Idea is to build the
+#'histogram first with a "too" small bin width before fitting a regression
+#'spline to it with a Poisson distribution of the observed counts.
+#'
+#'@aliases gamlockedTrain print.gamlockedTrain summary.gamlockedTrain
+#'plot.gamlockedTrain
+#'@param lockedTrain a \code{\link{lockedTrain}} object.
+#'@param bw the bin width (in s) used to generate the observations on which the
+#'gam fit will be performed. See details below.
+#'@param bs the type of splines used. See \code{\link[mgcv]{s}}.
+#'@param k the dimension of the basis used to represent the smooth psth. See
+#'\code{\link[mgcv]{s}}.
+#'@param x an \code{gamlockedTrain} object.
+#'@param object an \code{gamlockedTrain} object.
+#'@param xlim a numeric (default value supplied). See \code{\link{plot}}.
+#'@param ylim a numeric (default value supplied). See \code{\link{plot}}.
+#'@param xlab a character (default value supplied). See \code{\link{plot}}.
+#'@param ylab a character (default value supplied). See \code{\link{plot}}.
+#'@param main a character (default value supplied). See \code{\link{plot}}.
+#'@param lwd line width used to plot the estimated density. See
+#'\code{\link{plot}}.
+#'@param col color used to plot the estimated density. See \code{\link{plot}}.
+#'@param \dots additional arguments passed to \code{\link[mgcv]{gam}} in
+#'\code{gamlockedTrain}. Not used in \code{print.gamlockedTrain} and
+#'\code{summary.gamlockedTrain}. Passed to \code{\link{plot}} in
+#'\code{plot.gamlockedTrain}.
+#'@return A list of class \code{gamlockedTrain} is returned by
+#'\code{gamlockedTrain}. This list has the following components:
+#'
+#'\code{print.gamlockedTrain} returns the result of
+#'\code{\link[mgcv]{print.gam}} applied to the component \code{gamFit} of its
+#'argument.
+#'
+#'\code{summary.gamlockedTrain} returns the result of
+#'\code{\link[mgcv]{summary.gam}} applied to the component \code{gamFit} of its
+#'argument.
+#'@returnItem gamFit the \code{\link[mgcv]{gamObject}} generated.
+#'@returnItem Time the vector of bin centers.
+#'@returnItem nRef the number of spikes in the reference train. See
+#'\code{\link{hist.lockedTrain}}.
+#'@returnItem testFreq the mean frequency of the test neuron. See
+#'\code{\link{hist.lockedTrain}}.
+#'@returnItem bwV the vector of bin widths used.
+#'@returnItem CCH a logical which is \code{TRUE} if a cross-intensity was
+#'estimated and \code{FALSE} in the case of an auto-intensity.
+#'@returnItem call the matched call.
+#'@author Christophe Pouzat \email{christophe.pouzat@@gmail.com}
+#'@seealso \code{\link{lockedTrain}}, \code{\link{plot.lockedTrain}},
+#'\code{\link[mgcv]{gam}}
+#'@references Wood S.N. (2006) \emph{Generalized Additive Models: An
+#'Introduction with R}. Chapman and Hall/CRC Press.
+#'@keywords models smooth regression
+#'@examples
+#'
+#'\dontrun{
+#'## load e070528spont data set
+#'data(e070528spont)
+#'## create a lockedTrain object with neuron 1 as reference
+#'## and neuron 3 as test up to lags of +/- 250 ms
+#'lt1.3 <- lockedTrain(e070528spont[[1]],e070528spont[[3]],laglim=c(-1,1)*0.25)
+#'## look at the cross raster plot
+#'lt1.3
+#'## build a histogram of it using a 10 ms bin width
+#'hist(lt1.3,bw=0.01)
+#'## do it the smooth way
+#'slt1.3 <- gamlockedTrain(lt1.3)
+#'plot(slt1.3)
+#'## do some check on the gam fit
+#'summary(slt1.3)
+#'gam.check(gamObj(slt1.3))
+#'}
 gamlockedTrain <- function(lockedTrain,
                          bw=0.001,
                          bs="cr",
