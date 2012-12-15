@@ -208,7 +208,7 @@ NULL
 #'@references
 #'\url{http://www.biomedicale.univ-paris5.fr/physcerv/C_Pouzat/Doc/ChaffiolEtAl_FENS2006.pdf}
 #'@source Recording and spike sorting performed by Antoine Chaffiol
-#'\email{antoine.chaffiol@univ-paris5.fr} at the Cerebral Physiology Lab, CNRS
+#'\email{antoine.chaffiol@@univ-paris5.fr} at the Cerebral Physiology Lab, CNRS
 #'UMR 8118:
 #'\url{http://www.biomedicale.univ-paris5.fr/physcerv/physiologie_cerebrale.htm}.
 #'@keywords datasets

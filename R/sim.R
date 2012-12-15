@@ -188,7 +188,7 @@ maxIntensity <- function(object,
 #'
 #'\dontrun{
 #'## The run times given in the sequel were measured on a laptop
-#'## with a dual core CPU: 2x Intel Core 2 Duo CPU P9500 @ 2.53GHz
+#'## with a dual core CPU: 2x Intel Core 2 Duo CPU P9500 @@ 2.53GHz
 #'## The RAM was 4 GB large. The PC ran Ubuntu 9.04 and R-2.9.2
 #'## compiled with a dynamically link ATLAS version of BLAS.
 #'
