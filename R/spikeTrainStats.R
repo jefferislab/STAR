@@ -1,3 +1,52 @@
+#'Variance-Time Analysis for Spike Trains
+#'
+#'Performs Variance-Time Analysis for a Spike Train (or any univariate time
+#'series) assuming a Poisson Process with the same Rate as the Spike Train.
+#'
+#'See Fig. 5 of Ogata (1988) for details. The confidence intervals are obtained
+#'with a Normal approximation of the Poisson distribution.
+#'
+#'@aliases varianceTime plot.varianceTime is.varianceTime
+#'@param spikeTrain a \code{spikeTrain} object or a vector which can be coerced
+#'to such an object.
+#'@param CI a numeric vector with at most two elements. The coverage
+#'probability of the confidence intervals.
+#'@param windowSizes a numeric increasing vector of positive numbers. The
+#'window sizes used to split the spike train.
+#'@return \code{varianceTime} returns a list of class \code{varianceTime} with
+#'the following elements:
+#'
+#'\code{plot.varianceTime} is used for its side effect: a graph is produced.
+#'
+#'\code{is.varianceTime} returns \code{TRUE} if its argument is a
+#'\code{varianceTime} object and \code{FALSE} otherwise.
+#'@returnItem s2 numeric vector of empirical variance.
+#'@returnItem sigma2 numeric vector of expected variance under the Poisson
+#'hypothesis.
+#'@returnItem ciUp a numeric vector or a 2 rows matrix with the upper limits of
+#'the confidence interval(s).
+#'@returnItem ciLow a numeric vector or a 2 rows matrix with the lower limits
+#'of the confidence interval(s).
+#'@returnItem windowSizes numeric vector of window sizes actually used.
+#'@returnItem CI a numeric vector, the coverage probabilities of the confidence
+#'intervals.
+#'@returnItem call the matched call
+#'@author Christophe Pouzat \email{christophe.pouzat@@gmail.com} and Chong Gu
+#'\email{chong@@stat.purdue.edu} for a correction on the sampling variance of
+#'the variance of a normal distribution.
+#'@seealso \code{\link{acf.spikeTrain}}, \code{\link{renewalTestPlot}}
+#'@references Ogata, Yosihiko (1988) Statistical Models for Earthquake
+#'Occurrences and Residual Analysis for Point Processes. \emph{Journal of the
+#'American Statistical Association} \bold{83}: 9-27.
+#'@keywords ts survival
+#'@examples
+#'
+#'## Replicate (almost) Fig. 5 of Ogata 1988
+#'data(ShallowShocks)
+#'vtShallow <- varianceTime(ShallowShocks$Date,,c(5,10,20,40,60,80,seq(100,500,by = 25))*10)
+#'is.varianceTime(vtShallow)
+#'plot(vtShallow, style="Ogata")
+#'
 varianceTime <- function (spikeTrain,
                           CI = c(0.95, 0.99),
                           windowSizes) {
@@ -65,6 +114,10 @@ varianceTime <- function (spikeTrain,
 
 }
 
+#'@param obj a object to test against a \code{varianceTime} object.
+#'@return logical
+#'@export
+#'@rdname varianceTime
 is.varianceTime <- function(obj) {
 
   if(!("varianceTime" %in% class(obj))) return(FALSE)
@@ -81,6 +134,19 @@ is.varianceTime <- function(obj) {
   TRUE
 }
 
+
+#'@param x a \code{varianceTime} object.
+#'@param style a character. The style of the plot, \code{"default"} or
+#'\code{"Ogata"}.
+#'@param unit a character. The unit in which the spike times are expressed.
+#'@param xlab a character. The x label.
+#'@param ylab a character. The y label.
+#'@param main a character. The title.
+#'@param sub a character. The subtitle.
+#'@param xlim a numeric. See \code{\link{plot}}.
+#'@param ylim a numeric. See \code{\link{plot}}.
+#'@param \dots see \code{\link{plot}}.
+#'@rdname varianceTime
 plot.varianceTime <- function (x,
                                style = c("default", "Ogata"), 
                                unit = "s", xlab, ylab, main,
