@@ -265,7 +265,7 @@ mkTightBMtargetFct <- function(ci=0.95,
 #'W. S. Kendall, J.- M. Marin and C. P. Robert (2007) Brownian Confidence Bands
 #'on Monte Carlo Output. \emph{Statistics and Computing} \bold{17}: 1--10.
 #'Preprint available at:
-#'\url{http://www.ceremade.dauphine.fr/%7Exian/kmr04.rev.pdf}
+#'\url{http://www.ceremade.dauphine.fr/\%7Exian/kmr04.rev.pdf}
 #'@keywords distribution htest
 #'@examples
 #'

@@ -9,7 +9,7 @@
 #'term can correspond to a single variable effect or to the interaction of two
 #'variables.
 #'
-#'\code{%qp%} is the binary version of \code{quickPredict}.
+#'\code{\%qp\%} is the binary version of \code{quickPredict}.
 #'
 #'@aliases quickPredict %qp%
 #'@param object an object inheriting from ssanova and ssanova0
@@ -59,7 +59,7 @@
 #'## plot result with method plot for quickPredict objects
 #'plot(comp.pred)
 #'## get prediction for the second term, equi using the binary version
-#'equi.pred <- nox.fit %qp% "equi"
+#'equi.pred <- nox.fit \%qp\% "equi"
 #'plot(equi.pred)
 #'## get prediction for the interaction term, comp:equi
 #'comp.equi.pred <- nox.fit %qp% "comp:equi"
